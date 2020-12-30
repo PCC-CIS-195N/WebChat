@@ -1,0 +1,55 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: black;
+}
+#inputLine {
+    width: calc(100% - 30px);
+    height: 1.5em;
+    margin: 0px 10px 0px 10px;
+    padding: 0px 5px 0px 5px;
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+}
+#chatText {
+    width: calc(100% - 20px);
+    height: calc(100vh - 2.5em);
+    margin: 10px 10px 0px 10px;
+    border: 1px solid white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: black;
+    color: white;
+}
+.outer {
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff40;
+}
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+.inner {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    padding: 20px;
+    background-color: #000000;
+    border: solid 1px white;
+}
+.header {
+    font-size: 1.25em;
+    color: lime;
+}
+#nameInput {
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+}

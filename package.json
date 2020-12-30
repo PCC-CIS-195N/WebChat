@@ -1,0 +1,16 @@
+{
+  "name": "webchat",
+  "version": "1.0.0",
+  "description": "A chat server in Node.js and Express.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Marc Goodman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mssql": "^6.3.0",
+    "ws": "^7.4.1"
+  }
+}
