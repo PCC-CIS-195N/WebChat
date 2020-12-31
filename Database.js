@@ -15,7 +15,15 @@ module.exports = class Database {
     /* Promise Version */
     fetchHistory_promise() {
         return this.pool
-            .then((conn) => conn.query('SELECT TOP 1000 * FROM Posts;'))
+            .then((conn) => conn.query(
+                'SELECT *\n' +
+                'FROM (\n' +
+                '   SELECT TOP 500 *\n' +
+                '   FROM Posts\n' +
+                '   ORDER BY time DESC\n' +
+                ') AS R\n' +
+                'ORDER BY time ASC;'
+            ))
             .then(result => result.recordset)
             .catch((err) => {
                 console.log(err);
@@ -26,7 +34,15 @@ module.exports = class Database {
     /* async/await version */
     async fetchHistory() {
         let conn = await this.pool;
-        let result = await conn.query('SELECT TOP 1000 * FROM Posts;');
+        let result = await conn.query(
+            'SELECT *\n' +
+            'FROM (\n' +
+            '   SELECT TOP 500 *\n' +
+            '   FROM Posts\n' +
+            '   ORDER BY time DESC\n' +
+            ') AS R\n' +
+            'ORDER BY time ASC;'
+        );
         return result.recordset;
     }
 

@@ -17,6 +17,7 @@ function nameEntered(name) {
     const MSG_SEPARATION_TIME = 3600000; // One hour in milliseconds
     const inputLine = document.getElementById('inputLine');
     const chat = document.getElementById('chatText');
+    let chatBuffer = "";
 
     inputLine.focus();
 
@@ -41,12 +42,13 @@ function nameEntered(name) {
 
     console.log("Init called.");
     // Create WebSocket connection.
-    const socket = new WebSocket('ws://localhost:3001/');
+    const socket = new WebSocket(`ws://${window.location.hostname}:3001/`);
 
     // Connection opened
     socket.addEventListener('open', function (event) {
         let previousSender;
         let previousTime = 0;
+        let historyDone = 0;
 
         // Listen for messages
         socket.addEventListener('message', function (event) {
@@ -75,19 +77,25 @@ function nameEntered(name) {
                     break;
                 case 'end': // end of log history, time to send join message.
                     socket.send(`{"type":"join","name":"${name}"}`);
+                    historyDone = 1;
                     break;
             }
             console.log(previousTime, msg.time, msg.time - previousTime);
             if (msg.type != 'end') {
                 if (sender == previousSender && msg.time - previousTime < MSG_SEPARATION_TIME) {
-                    chat.innerHTML += '<br>' + line;
+                    chatBuffer += '<br>' + line;
                 } else {
-                    chat.innerHTML += `<br><br><span style='color:${color};'>${dateString} - ${sender}:</span><br>` + line;
+                    chatBuffer += `<br><br><span style='color:${color};'>${dateString} - ${sender}:</span><br>` + line;
                 }
                 previousSender = sender;
                 previousTime = msg.time;
             }
-            chat.scrollTop = chat.scrollHeight;
+            if (historyDone) {
+                // scrolling and displaying are relatively expensive, so don't update the page
+                // until all the history is added to the chat buffer.
+                chat.innerHTML = chatBuffer;
+                chat.scrollTop = chat.scrollHeight;
+            }
         });
 
         window.addEventListener('beforeunload', () => {
