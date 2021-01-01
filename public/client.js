@@ -6,7 +6,6 @@ function init() {
 
     nameInput.addEventListener('keyup', (evt) => {
         if (evt.code == 'Enter' || evt.code == 'NumpadEnter') {
-            console.log("Name:", nameInput.value);
             namePanel.style.display = 'none';
             nameEntered(nameInput.value);
         }
@@ -40,7 +39,6 @@ function nameEntered(name) {
         chat.scrollTop = chat.scrollHeight;
     });
 
-    console.log("Init called.");
     // Create WebSocket connection.
     const socket = new WebSocket(`ws://${window.location.hostname}:3001/`);
 
@@ -52,7 +50,6 @@ function nameEntered(name) {
 
         // Listen for messages
         socket.addEventListener('message', function (event) {
-            console.log('Message from server ', event.data);
             let msg = JSON.parse(event.data);
             let line;
             let color;
@@ -80,7 +77,6 @@ function nameEntered(name) {
                     historyDone = 1;
                     break;
             }
-            console.log(previousTime, msg.time, msg.time - previousTime);
             if (msg.type != 'end') {
                 if (sender == previousSender && msg.time - previousTime < MSG_SEPARATION_TIME) {
                     chatBuffer += '<br>' + line;
@@ -107,7 +103,6 @@ function nameEntered(name) {
 
         inputLine.addEventListener('keyup', (evt) => {
             if (evt.code == 'Enter' || evt.code == 'NumpadEnter') {
-                console.log("Line:", inputLine.value);
                 socket.send(JSON.stringify({
                     type: 'post',
                     name: name,
