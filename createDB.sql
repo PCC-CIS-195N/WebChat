@@ -22,7 +22,7 @@ CREATE TABLE Posts (
 	name NVARCHAR(MAX),
 	type NVARCHAR(MAX),
 	time NUMERIC(19),
-	post NVARCHAR(MAX)
+	post NVARCHAR(MAX) COLLATE Latin1_General_CI_AS
 );
 GO
 INSERT INTO Posts
