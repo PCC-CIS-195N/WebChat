@@ -7,7 +7,8 @@ module.exports = class Database {
             user: 'WebChat',
             password: 'WebChat',
             options: {
-                enableArithAbort: true
+                enableArithAbort: true,
+                encrypt: false
             }
         });
     }
